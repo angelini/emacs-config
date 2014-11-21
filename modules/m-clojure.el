@@ -14,6 +14,6 @@
 (install-packages '(clojure-mode
                     cider))
 
-(provide 'module-clojure)
+(provide 'm-clojure)
 
 ;;; clojure.el ends here

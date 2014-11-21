@@ -19,6 +19,6 @@
   '(progn
      (subword-mode +1)))
 
-(provide 'module-coffeescript)
+(provide 'm-coffeescript)
 
 ;;; coffeescript.el ends here

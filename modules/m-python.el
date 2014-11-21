@@ -71,13 +71,13 @@
 ;; Flycheck - Python
 (setq flycheck-flake8rc "~/.flake8.rc")
 
-(eval-after-load 'python-mode
-  '(progn
-     (hc-highlight-trailing-whitespace t)
-     (setq python-indent-offset 4)
-     (setq python-indent 4)
-     (subword-mode +1)))
+;; (eval-after-load 'python-mode
+;;   '(progn
+;;      (hc-highlight-trailing-whitespace t)
+;;      (setq python-indent-offset 4)
+;;      (setq python-indent 4)
+;;      (subword-mode +1)))
 
-(provide 'module-python)
+(provide 'm-python)
 
 ;;; python.el ends here

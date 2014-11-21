@@ -24,6 +24,6 @@
   '(progn
      (subword-mode +1)))
 
-(provide 'module-ruby)
+(provide 'm-ruby)
 
 ;;; ruby.el ends here

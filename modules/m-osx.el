@@ -23,6 +23,6 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
 
-(provide 'module-osx)
+(provide 'm-osx)
 
 ;;; osx.el ends here

@@ -28,7 +28,7 @@
       '(("gnu" . "http://elpa.gnu.org/packages/")
         ("org" . "http://orgmode.org/elpa/")
         ("melpa" . "http://melpa.milkbox.net/packages/")
-	("marmalade" . "http://marmalade-repo.org/packages/")))
+        ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (defvar package-list
   '(ag
@@ -56,16 +56,16 @@
   (package-refresh-contents)
   (install-packages package-list))
 
-(require 'module-navigation   "navigation.el")
-(require 'module-theme        "theme.el")
-(require 'module-python       "python.el")
-(require 'module-clojure      "clojure.el")
-(require 'module-ruby         "ruby.el")
-(require 'module-coffeescript "coffeescript.el")
+(require 'm-navigation)
+(require 'm-theme)
+(require 'm-python)
+(require 'm-clojure)
+(require 'm-ruby)
+(require 'm-coffeescript)
 
 ;; OSX specific settings
 (when (eq system-type 'darwin)
-  (require 'module-osx "osx.el"))
+  (require 'm-osx))
 
 ;; Increase GC threshold to 50MB
 (setq gc-cons-threshold 50000000)

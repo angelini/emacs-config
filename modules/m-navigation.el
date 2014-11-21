@@ -39,6 +39,6 @@
 
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
-(provide 'module-navigation)
+(provide 'm-navigation)
 
 ;;; navigation.el ends here
