@@ -11,9 +11,10 @@
 
 ;;; Code:
 
-(install-package 'color-theme-solarized)
+(install-packages '(color-theme-solarized
+                    zenburn-theme))
 
-(load-theme 'solarized-light t)
+(load-theme 'zenburn t)
 
 (set-face-attribute 'default nil :height 120 :family "Source Code Pro")
 

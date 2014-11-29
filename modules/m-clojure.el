@@ -14,6 +14,12 @@
 (install-packages '(clojure-mode
                     cider))
 
+;; Eldoc
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+(setq cider-show-error-buffer nil)
+(setq nrepl-hide-special-buffers t)
+
 (provide 'm-clojure)
 
 ;;; clojure.el ends here

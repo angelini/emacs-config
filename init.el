@@ -108,6 +108,9 @@
 (setq-default tab-stop-list (number-sequence 4 120 4))
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Whitespace
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:
