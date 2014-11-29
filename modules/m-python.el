@@ -35,8 +35,6 @@
 
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
-(setq venv-location "~/.virtualenvs/")
-(venv-workon "sc")
 
 (setq eshell-prompt-function
       (lambda ()
@@ -47,6 +45,11 @@
 ;; Venv mode line
 (setq-default mode-line-format
               (cons '(:exec venv-current-name) mode-line-format))
+
+;; Enable venv
+(when (file-exists-p "~/.virtualenvs")
+  (setq venv-location "~/.virtualenvs/")
+  (venv-workon "sc"))
 
 ;; IPython
 (setq python-shell-interpreter "ipython"

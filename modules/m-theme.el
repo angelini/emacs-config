@@ -17,10 +17,19 @@
 
 (set-face-attribute 'default nil :height 120 :family "Source Code Pro")
 
+;; Bell
 (setq ring-bell-function 'ignore)
+
+;; Decorations
 (scroll-bar-mode -1)
-(blink-cursor-mode -1)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
+
+;; Cursor
+(blink-cursor-mode -1)
+
+;; Line wrap
+(set-default 'truncate-lines t)
 
 (provide 'm-theme)
 
