@@ -112,6 +112,29 @@
 ;; Whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Flycheck
+(setq flycheck-check-syntax-automatically '(save
+                                            mode-enabled))
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+;; Todo
+(define-key global-map (kbd "C-c t")
+  (lambda()
+    (interactive)
+    (find-file "/Users/alexangelini/Desktop/todo.txt")))
+
+;; Revert all buffers
+(defun revert-all-buffers ()
+  "Refreshes all open buffers from their respective files."
+  (interactive)
+  (dolist (buf (buffer-list))
+    (with-current-buffer buf
+      (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
+        (revert-buffer t t t))))
+  (message "Refreshed open files."))
+
+(define-key global-map (kbd "C-c r") 'revert-all-buffers)
+
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:

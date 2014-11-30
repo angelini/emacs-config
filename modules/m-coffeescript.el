@@ -21,4 +21,4 @@
 
 (provide 'm-coffeescript)
 
-;;; coffeescript.el ends here
+;;; m-coffeescript.el ends here

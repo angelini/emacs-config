@@ -32,6 +32,15 @@
 ;; Line wrap
 (set-default 'truncate-lines t)
 
+;; Line wrapping
+(set-default 'truncate-lines t)
+
+;; Paren mode
+(show-paren-mode t)
+
+;; Lambda symbols
+(global-prettify-symbols-mode 1)
+
 (provide 'm-theme)
 
-;;; theme.el ends here
+;;; m-theme.el ends here

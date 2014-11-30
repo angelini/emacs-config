@@ -25,4 +25,4 @@
 
 (provide 'm-osx)
 
-;;; osx.el ends here
+;;; m-osx.el ends here

@@ -26,4 +26,4 @@
 
 (provide 'm-ruby)
 
-;;; ruby.el ends here
+;;; m-ruby.el ends here

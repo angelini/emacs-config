@@ -47,4 +47,4 @@
 
 (provide 'm-navigation)
 
-;;; navigation.el ends here
+;;; m-navigation.el ends here

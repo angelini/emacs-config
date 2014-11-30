@@ -22,4 +22,4 @@
 
 (provide 'm-clojure)
 
-;;; clojure.el ends here
+;;; m-clojure.el ends here
