@@ -62,6 +62,7 @@
 (require 'm-clojure)
 (require 'm-ruby)
 (require 'm-coffeescript)
+(require 'm-sh)
 
 ;; OSX specific settings
 (when (eq system-type 'darwin)
