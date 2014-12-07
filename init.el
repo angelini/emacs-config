@@ -37,6 +37,14 @@
     flycheck
     scala-mode2))
 
+(defvar require-refresh t)
+
+(defun refresh-packages ()
+  "Refresh packages at most once."
+  (when require-refresh
+    (package-refresh-contents)
+    (setq require-refresh nil)))
+
 (defun all-installed-p ()
   "Check that all packages are installed."
   (cl-every #'package-installed-p package-list))
@@ -46,6 +54,7 @@
   (unless (memq package package-list)
     (add-to-list 'package-list package))
   (unless (package-installed-p package)
+    (refresh-packages)
     (package-install package)))
 
 (defun install-packages (packages)
@@ -53,7 +62,6 @@
   (mapc 'install-package packages))
 
 (unless (all-installed-p)
-  (package-refresh-contents)
   (install-packages package-list))
 
 (require 'm-navigation)
