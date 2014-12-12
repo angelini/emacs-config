@@ -13,9 +13,9 @@
 
 (defun set-path-from-shell-PATH ()
   "Copy the value of zsh's PATH into the envionrment."
-  (let ((path-from-shell (shell-command-to-string "TERM=xterm-256color $SHELL -i -c 'echo $PATH'")))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
+  (let ((path (shell-command-to-string "source $HOME/.profile && printf $PATH")))
+    (setenv "PATH" path)
+    (setq exec-path (split-string path ":"))))
 
 (when window-system (set-path-from-shell-PATH))
 
