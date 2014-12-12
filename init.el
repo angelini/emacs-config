@@ -35,7 +35,8 @@
     magit
     multi-term
     flycheck
-    scala-mode2))
+    scala-mode2
+    yaml-mode))
 
 (defvar require-refresh t)
 
