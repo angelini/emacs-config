@@ -70,7 +70,7 @@
 (require 'm-python)
 (require 'm-clojure)
 (require 'm-ruby)
-(require 'm-coffeescript)
+(require 'm-javascript)
 (require 'm-sh)
 
 ;; OSX specific settings

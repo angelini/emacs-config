@@ -24,6 +24,17 @@
 
 (add-hook 'clojure-mode-hook 'flycheck-mode)
 
+;; Cider refresh
+(defun cider-namespace-refresh ()
+  "Refreshes current namespace in the Cider REPL."
+  (interactive)
+  (cider-interactive-eval
+   "(require 'clojure.tools.namespace.repl)
+    (clojure.tools.namespace.repl/refresh)"))
+
+(require 'clojure-mode)
+(define-key clojure-mode-map (kbd "M-r") 'cider-namespace-refresh)
+
 ;; Autocomplete
 (global-company-mode)
 

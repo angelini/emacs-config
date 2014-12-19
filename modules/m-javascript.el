@@ -1,4 +1,4 @@
-;;; coffeescript.el --- Coffeescript
+;;; javascript.el --- Javascript
 
 ;; Copyright (c) 2014 Alex Angelini
 ;;
@@ -7,18 +7,19 @@
 
 ;;; Commentary:
 
-;; Coffeescript settings
+;; Javascript settings
 
 ;;; Code:
 
 (install-package 'coffee-mode)
 
-(custom-set-variables '(coffee-tab-width 2))
+(setq coffee-tab-width 2)
+(setq js-indent-level 2)
 
 (eval-after-load 'coffee-mode
   '(progn
      (subword-mode +1)))
 
-(provide 'm-coffeescript)
+(provide 'm-javascript)
 
 ;;; m-coffeescript.el ends here
