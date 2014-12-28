@@ -19,6 +19,7 @@
 ;; Eldoc
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
+(require 'cider)
 (setq cider-show-error-buffer nil)
 (setq nrepl-hide-special-buffers t)
 

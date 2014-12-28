@@ -13,6 +13,9 @@
 
 (install-package 'coffee-mode)
 
+(require 'coffee-mode)
+(defvar js-indent-level)
+
 (setq coffee-tab-width 2)
 (setq js-indent-level 2)
 
@@ -22,4 +25,4 @@
 
 (provide 'm-javascript)
 
-;;; m-coffeescript.el ends here
+;;; m-javascript.el ends here
