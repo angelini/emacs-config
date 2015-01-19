@@ -34,6 +34,9 @@
 (setq projectile-completion-system 'helm)
 (setq projectile-switch-project-action 'helm-projectile)
 
+;; Imenu keybinding
+(global-set-key (kbd "C-x TAB")  'imenu)
+
 ;; Window move
 (windmove-default-keybindings 'meta)
 
