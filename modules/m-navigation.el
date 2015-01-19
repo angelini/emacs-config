@@ -46,6 +46,12 @@
 (global-set-key (kbd "C-c <up>")    'windmove-up)
 (global-set-key (kbd "C-c <down>")  'windmove-down)
 
+;; Multiple windows
+(global-set-key (kbd "M-n") 'make-frame)
+(global-set-key (kbd "M-`") 'other-frame)
+(global-set-key (kbd "M-w") 'delete-frame)
+
+;; Ace jump
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (provide 'm-navigation)

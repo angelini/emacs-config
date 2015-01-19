@@ -103,6 +103,9 @@
 ;; Default mode
 (setq-default major-mode 'text-mode)
 
+;; Server
+(server-start)
+
 ;; Buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
