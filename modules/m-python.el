@@ -17,6 +17,9 @@
 
 (require 'virtualenvwrapper)
 (require 'pytest)
+(require 'python)
+(require 'jedi)
+(require 'flycheck)
 
 (defun replace-home (pwd)
   "Replace home dir in PWD with ~."
@@ -36,11 +39,11 @@
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 
-(setq eshell-prompt-function
-      (lambda ()
-        (concat "(" venv-current-name ") "
-                (shrink-dir-names (replace-home (eshell/pwd)))
-                " $ ")))
+(custom-set-variables '(eshell-prompt-function
+                        (quote (lambda ()
+                                 (concat "(" venv-current-name ") "
+                                         (shrink-dir-names (replace-home (eshell/pwd)))
+                                         " $ ")))))
 
 ;; Venv mode line
 (setq-default mode-line-format
@@ -57,7 +60,7 @@
       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
       python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-      python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+      python-shell-completion-string-code "';'.join(module_completion('''%s'''))\n"
       python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ;; Jedi
@@ -74,12 +77,11 @@
 ;; Flycheck - Python
 (setq flycheck-flake8rc "~/.flake8.rc")
 
-;; (eval-after-load 'python-mode
-;;   '(progn
-;;      (hc-highlight-trailing-whitespace t)
-;;      (setq python-indent-offset 4)
-;;      (setq python-indent 4)
-;;      (subword-mode +1)))
+(eval-after-load 'python-mode
+  '(progn
+     (hc-highlight-trailing-whitespace t)
+     (setq python-indent-offset 4)
+     (subword-mode +1)))
 
 (provide 'm-python)
 
