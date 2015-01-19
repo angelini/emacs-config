@@ -129,11 +129,11 @@
                                             mode-enabled))
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-;; Todo
+;; Org file
 (define-key global-map (kbd "C-c t")
   (lambda()
     (interactive)
-    (find-file "/Users/alexangelini/Desktop/todo.txt")))
+    (find-file "/Users/alexangelini/Dropbox/main.org")))
 
 ;; Revert all buffers
 (defun revert-all-buffers ()
