@@ -31,7 +31,6 @@
         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (defvar package-list
-  '(ag
   '(yasnippet
     magit
     multi-term

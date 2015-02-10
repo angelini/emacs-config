@@ -14,7 +14,8 @@
 (install-packages '(ace-jump-mode
                     projectile
                     helm
-                    helm-projectile))
+                    helm-projectile
+                    helm-ag))
 
 (require 'helm-config)
 (require 'helm-projectile)
@@ -49,10 +50,17 @@
 ;; Multiple windows
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-`") 'other-frame)
-(global-set-key (kbd "M-w") 'delete-frame)
 
 ;; Ace jump
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;; Ag
+(defun projectile-helm-ag ()
+  "Search using ag in the current projectile root."
+  (interactive)
+  (helm-ag (projectile-project-root)))
+
+(global-set-key (kbd "M-s") 'projectile-helm-ag)
 
 (provide 'm-navigation)
 
