@@ -72,6 +72,7 @@
 (require 'm-ruby)
 (require 'm-javascript)
 (require 'm-sh)
+(require 'm-rust)
 
 ;; OSX specific settings
 (when (eq system-type 'darwin)
