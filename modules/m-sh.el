@@ -18,6 +18,9 @@
             (setq sh-basic-offset 2)
             (setq sh-indentation 2)))
 
+(add-hook 'term-mode-hook (lambda ()
+                            (define-key term-raw-map (kbd "M-v") 'term-paste)))
+
 (provide 'm-sh)
 
 ;;; m-sh.el ends here
