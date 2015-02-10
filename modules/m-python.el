@@ -55,13 +55,13 @@
   (venv-workon "sc"))
 
 ;; IPython
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args ""
-      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-      python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-      python-shell-completion-string-code "';'.join(module_completion('''%s'''))\n"
-      python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args ""
+;;       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;       python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+;;       python-shell-completion-string-code "';'.join(module_completion('''%s'''))\n"
+;;       python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ;; Jedi
 (add-hook 'python-mode-hook 'jedi:setup)
@@ -79,7 +79,6 @@
 
 (eval-after-load 'python-mode
   '(progn
-     (hc-highlight-trailing-whitespace t)
      (setq python-indent-offset 4)
      (subword-mode +1)))
 

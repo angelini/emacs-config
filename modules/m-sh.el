@@ -11,6 +11,8 @@
 
 ;;; Code:
 
+(require 'term)
+
 (add-hook 'sh-mode-hook
           (lambda ()
             (setq sh-basic-offset 2)
@@ -18,4 +20,4 @@
 
 (provide 'm-sh)
 
-;;; coffeescript.el ends here
+;;; m-sh.el ends here
