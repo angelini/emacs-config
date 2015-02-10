@@ -32,6 +32,7 @@
 
 (defvar package-list
   '(ag
+  '(yasnippet
     magit
     multi-term
     flycheck
@@ -134,6 +135,13 @@
   (lambda()
     (interactive)
     (find-file "/Users/alexangelini/Dropbox/main.org")))
+
+;; Snippets
+(require 'yasnippet)
+(yas-global-mode 1)
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)
 
 ;; Revert all buffers
 (defun revert-all-buffers ()
