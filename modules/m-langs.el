@@ -1,4 +1,4 @@
-;;; python.el --- Python
+;;; langs.el --- Programming language settings
 
 ;; Copyright (c) 2014 Alex Angelini
 ;;
@@ -7,19 +7,34 @@
 
 ;;; Commentary:
 
-;; Virtual env, iPython
+;; Modes and customizations for various programming languages
 
 ;;; Code:
+
+(install-packages '(scala-mode2
+                    yaml-mode))
+
+;;; Javascript
+
+(install-package 'coffee-mode)
+
+(require 'coffee-mode)
+(defvar js-indent-level)
+
+(setq coffee-tab-width 2)
+(setq js-indent-level 2)
+
+(eval-after-load 'coffee-mode
+  '(progn
+     (subword-mode +1)))
+
+;;; Python
 
 (install-packages '(jedi
                     virtualenvwrapper
                     pytest))
 
-(require 'virtualenvwrapper)
-(require 'pytest)
 (require 'python)
-(require 'jedi)
-(require 'flycheck)
 
 (defun replace-home (pwd)
   "Replace home dir in PWD with ~."
@@ -36,6 +51,7 @@
       (car (last d-list))))
    (split-string pwd "/")))
 
+(require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
 
@@ -54,34 +70,59 @@
   (setq venv-location "~/.virtualenvs/")
   (venv-workon "sc"))
 
-;; IPython
-;; (setq python-shell-interpreter "ipython"
-;;       python-shell-interpreter-args ""
-;;       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-;;       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-;;       python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-;;       python-shell-completion-string-code "';'.join(module_completion('''%s'''))\n"
-;;       python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-
 ;; Jedi
+(require 'jedi)
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
 (setq jedi:get-in-function-call-delay 10000)
 
 ;; py.test
+(require 'pytest)
 (setq pytest-global-name "py.test")
 (add-hook 'python-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c m") 'pytest-module)))
 
 ;; Flycheck - Python
-(setq flycheck-flake8rc "~/.flake8.rc")
+(require 'flycheck)
+(setq flycheck-flake8rc "~/.flake8rc")
+
+;;; Rust
+
+(install-packages '(rust-mode
+                    flycheck-rust))
 
 (eval-after-load 'python-mode
   '(progn
      (setq python-indent-offset 4)
      (subword-mode +1)))
 
-(provide 'm-python)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-;;; m-python.el ends here
+
+;;; Ruby
+
+(install-package 'inf-ruby)
+
+;; Add other file types as ruby files
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
+
+(eval-after-load 'ruby-mode
+  '(progn
+     (subword-mode +1)))
+
+;;; Shell
+
+(add-hook 'sh-mode-hook
+          (lambda ()
+            (setq sh-basic-offset 2)
+            (setq sh-indentation 2)))
+
+(provide 'm-langs)
+
+;;; m-langs.el ends here

@@ -52,7 +52,7 @@
 (global-set-key (kbd "M-`") 'other-frame)
 
 ;; Ace jump
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(define-key global-map (kbd "C-;") 'ace-jump-mode)
 
 ;; Ag
 (defun projectile-helm-ag ()

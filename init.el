@@ -35,8 +35,7 @@
     magit
     multi-term
     flycheck
-    scala-mode2
-    yaml-mode))
+    company))
 
 (defvar require-refresh t)
 
@@ -67,12 +66,7 @@
 
 (require 'm-navigation)
 (require 'm-theme)
-(require 'm-python)
-(require 'm-clojure)
-(require 'm-ruby)
-(require 'm-javascript)
-(require 'm-sh)
-(require 'm-rust)
+(require 'm-langs)
 
 ;; OSX specific settings
 (when (eq system-type 'darwin)
@@ -134,7 +128,13 @@
 (define-key global-map (kbd "C-c t")
   (lambda()
     (interactive)
-    (find-file "/Users/alexangelini/Dropbox/main.org")))
+    (find-file "/Users/alexangelini/Dropbox/org/work.org")))
+
+(define-key global-map (kbd "C-c y")
+  (lambda()
+    (interactive)
+    (find-file "/Users/alexangelini/Dropbox/org/home.org")))
+
 
 ;; Snippets
 (require 'yasnippet)
@@ -142,6 +142,14 @@
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)
+
+;; Shell
+(require 'term)
+(add-hook 'term-mode-hook (lambda ()
+                            (define-key term-raw-map (kbd "M-v") 'term-paste)))
+
+;; Autocomplete
+(global-company-mode)
 
 ;; Revert all buffers
 (defun revert-all-buffers ()
