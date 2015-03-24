@@ -35,7 +35,8 @@
     magit
     multi-term
     flycheck
-    company))
+    company
+    isend-mode))
 
 (defvar require-refresh t)
 
@@ -150,6 +151,10 @@
 
 ;; Autocomplete
 (global-company-mode)
+
+;; isend-mode
+(add-hook 'isend-mode-hook 'isend-default-shell-setup)
+(add-hook 'isend-mode-hook 'isend-default-ipython-setup)
 
 ;; Revert all buffers
 (defun revert-all-buffers ()

@@ -23,7 +23,8 @@
 (helm-mode 1)
 
 (setq helm-split-window-in-side-p t
-      helm-buffers-fuzzy-matching t)
+      helm-buffers-fuzzy-matching t
+      helm-display-header-line nil)
 
 ;; Scrolling
 (setq scroll-margin 0
