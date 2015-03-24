@@ -116,6 +116,15 @@
   '(progn
      (subword-mode +1)))
 
+;;; Go
+
+(install-package 'go-mode)
+
+(add-to-list 'exec-path "~/packages/go/bin")
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+(setenv "GOROOT" "/Users/alexangelini/packages/go")
+
 ;;; Shell
 
 (add-hook 'sh-mode-hook
