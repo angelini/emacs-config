@@ -11,7 +11,8 @@
 
 ;;; Code:
 
-(install-packages '(scala-mode2
+(install-packages '(company-mode
+                    scala-mode2
                     yaml-mode))
 
 ;;; Javascript
@@ -27,6 +28,35 @@
 (eval-after-load 'coffee-mode
   '(progn
      (subword-mode +1)))
+
+;;; Clojure
+
+(install-packages '(clojure-mode
+                    cider
+                    kibit-mode))
+
+;; Eldoc
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+
+(require 'cider)
+(setq cider-show-error-buffer nil)
+(setq nrepl-hide-special-buffers t)
+
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (flycheck-mode)
+            (company-mode)))
+
+;; Cider refresh
+(defun cider-namespace-refresh ()
+  "Refreshes current namespace in the Cider REPL."
+  (interactive)
+  (cider-interactive-eval
+   "(require 'clojure.tools.namespace.repl)
+    (clojure.tools.namespace.repl/refresh)"))
+
+(require 'clojure-mode)
+(define-key clojure-mode-map (kbd "M-r") 'cider-namespace-refresh)
 
 ;;; Python
 
