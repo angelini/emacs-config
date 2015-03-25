@@ -81,7 +81,7 @@
 (setq pytest-global-name "py.test")
 (add-hook 'python-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c m") 'pytest-module)))
+            (local-set-key (kbd "C-c C-m") 'pytest-module)))
 
 ;; Flycheck - Python
 (require 'flycheck)
