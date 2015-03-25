@@ -35,7 +35,6 @@
     magit
     multi-term
     flycheck
-    company
     isend-mode))
 
 (defvar require-refresh t)
@@ -148,9 +147,6 @@
 (require 'term)
 (add-hook 'term-mode-hook (lambda ()
                             (define-key term-raw-map (kbd "M-v") 'term-paste)))
-
-;; Autocomplete
-(global-company-mode)
 
 ;; isend-mode
 (add-hook 'isend-mode-hook 'isend-default-shell-setup)
