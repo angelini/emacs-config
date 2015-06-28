@@ -153,16 +153,38 @@
 (add-hook 'isend-mode-hook 'isend-default-ipython-setup)
 
 ;; Revert all buffers
+(defun revert-buffer-keep-undo ()
+  "Revert buffer but keep undo history."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (clear-visited-file-modtime)
+    (erase-buffer)
+    (insert-file-contents (buffer-file-name))
+    (set-visited-file-modtime)
+    (set-buffer-modified-p nil)))
+
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."
   (interactive)
   (dolist (buf (buffer-list))
     (with-current-buffer buf
-      (when (and (buffer-file-name) (file-exists-p (buffer-file-name)) (not (buffer-modified-p)))
-        (revert-buffer t t t))))
+      (when (and (buffer-file-name)
+                 (file-exists-p (buffer-file-name))
+                 (not (buffer-modified-p)))
+        (revert-buffer-keep-undo))))
   (message "Refreshed open files."))
 
 (define-key global-map (kbd "C-c r") 'revert-all-buffers)
+
+;; Close all other buffers
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (current-buffer)
+              (remove-if-not 'buffer-file-name (buffer-list)))))
+
+(define-key global-map (kbd "C-c k") 'kill-other-buffers)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
