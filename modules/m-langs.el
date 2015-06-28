@@ -11,7 +11,7 @@
 
 ;;; Code:
 
-(install-packages '(company-mode
+(install-packages '(company
                     scala-mode2
                     yaml-mode))
 
@@ -113,7 +113,7 @@
           (lambda ()
             (local-set-key (kbd "C-c C-m") 'pytest-module)))
 
-;; Flycheck - Python
+;; Flycheck
 (require 'flycheck)
 (setq flycheck-flake8rc "~/.flake8rc")
 

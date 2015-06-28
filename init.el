@@ -17,8 +17,8 @@
 (require 'cl)
 (require 'package)
 
-(defvar root-dir (file-name-directory load-file-name))
-(defvar modules-dir (expand-file-name  "modules" root-dir))
+(defvar root-dir (file-name-directory (or load-file-name buffer-file-name)))
+(defvar modules-dir (expand-file-name "modules" root-dir))
 
 (add-to-list 'load-path modules-dir)
 
@@ -91,6 +91,7 @@
 
 ;; Magit
 (global-set-key (kbd "C-c m") 'magit-status)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; Symlinks
 (setq vc-follow-symlinks t)
