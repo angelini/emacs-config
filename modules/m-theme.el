@@ -38,9 +38,6 @@
 ;; Paren mode
 (show-paren-mode t)
 
-;; Lambda symbols
-(global-prettify-symbols-mode 1)
-
 (provide 'm-theme)
 
 ;;; m-theme.el ends here
