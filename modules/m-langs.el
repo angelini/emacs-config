@@ -13,27 +13,35 @@
 
 (install-packages '(company
                     scala-mode2
-                    yaml-mode))
+                    yaml-mode
+                    markdown-mode))
 
 ;;; Javascript
 
-(install-package 'coffee-mode)
+(install-packages '(coffee-mode
+                    js2-mode))
 
 (require 'coffee-mode)
+(require 'js2-mode)
 (defvar js-indent-level)
 
 (setq coffee-tab-width 2)
 (setq js-indent-level 2)
+(setq js2-basic-offset 2)
+(setq js2-strict-trailing-comma-warning nil)
 
 (eval-after-load 'coffee-mode
   '(progn
      (subword-mode +1)))
 
+(add-hook 'js-mode-hook 'js2-minor-mode)
+
 ;;; Clojure
 
 (install-packages '(clojure-mode
                     cider
-                    kibit-mode))
+                    kibit-mode
+                    paredit))
 
 ;; Eldoc
 (add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
@@ -62,7 +70,8 @@
 
 (install-packages '(jedi
                     virtualenvwrapper
-                    pytest))
+                    pytest
+                    ob-ipython))
 
 (require 'python)
 
@@ -162,6 +171,17 @@
             (setq sh-basic-offset 2)
             (setq sh-indentation 2)))
 
-(provide 'm-langs)
+;;; CSS
 
+(require 'css-mode)
+(setq css-indent-offset 2)
+
+;;; Markdown
+
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (setq truncate-lines t)
+            (setq word-wrap t)))
+
+(provide 'm-langs)
 ;;; m-langs.el ends here
