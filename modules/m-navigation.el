@@ -11,7 +11,7 @@
 
 ;;; Code:
 
-(install-packages '(ace-jump-mode
+(install-packages '(avy
                     projectile
                     helm
                     helm-projectile
@@ -52,8 +52,9 @@
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-`") 'other-frame)
 
-;; Ace jump
-(define-key global-map (kbd "C-;") 'ace-jump-mode)
+;; Avy
+(global-set-key (kbd "C-;") 'avy-goto-char)
+(global-set-key (kbd "C-:") 'avy-goto-line)
 
 ;; Ag
 (defun projectile-helm-ag ()
