@@ -31,11 +31,15 @@
         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 (defvar package-list
-  '(yasnippet
+  '(org
+    yasnippet
     magit
     multi-term
     flycheck
-    isend-mode))
+    isend-mode
+    scratch
+    toggle-quotes
+    smartparens))
 
 (defvar require-refresh t)
 
@@ -117,6 +121,9 @@
 (setq-default tab-stop-list (number-sequence 4 120 4))
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Scratch
+(setq initial-major-mode 'text-mode)
+
 ;; Whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -135,6 +142,17 @@
   (lambda()
     (interactive)
     (find-file "/Users/alexangelini/Dropbox/org/home.org")))
+
+;; Org babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (ipython . t)))
+
+(setq org-confirm-babel-evaluate nil)
+
+;; Org Trello
+(custom-set-variables '(org-trello-files '("/path/to/file0" "/path/to/file1")))
 
 
 ;; Snippets
@@ -186,6 +204,12 @@
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 (define-key global-map (kbd "C-c k") 'kill-other-buffers)
+
+;; Toggle quotes
+(global-set-key (kbd "C-'") 'toggle-quotes)
+
+;; Smart Parens
+(require 'smartparens-config)
 
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
