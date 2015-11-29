@@ -57,12 +57,23 @@
 (global-set-key (kbd "C-:") 'avy-goto-line)
 
 ;; Ag
-(defun projectile-helm-ag ()
-  "Search using ag in the current projectile root."
-  (interactive)
-  (helm-ag (projectile-project-root)))
+(global-set-key (kbd "M-s") 'helm-do-ag-project-root)
+(global-set-key (kbd "M-S") 'helm-do-ag-this-file)
 
-(global-set-key (kbd "M-s") 'projectile-helm-ag)
+;; Delete word
+(defun delete-word (arg)
+  "Delete characters forward from ARG until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (forward-word arg) (point))))
+
+(defun backward-delete-word (arg)
+  "Delete characters backward from ARG until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-word (- arg)))
+
+(global-set-key (kbd "M-DEL") 'backward-delete-word)
 
 (provide 'm-navigation)
 
