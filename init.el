@@ -155,6 +155,13 @@
 (custom-set-variables '(org-trello-files '("/path/to/file0" "/path/to/file1")))
 
 
+;; Starscream
+(define-key global-map (kbd "C-c s")
+  (lambda()
+    (interactive)
+    (find-file "/Users/alexangelini/src/starscream/starscream/conf/schedule.yml")))
+
+
 ;; Snippets
 (require 'yasnippet)
 (yas-global-mode 1)
