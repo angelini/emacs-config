@@ -131,6 +131,8 @@
 (setq flycheck-check-syntax-automatically '(save
                                             mode-enabled))
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
 
 ;; Org file
 (define-key global-map (kbd "C-c t")
