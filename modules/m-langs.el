@@ -14,7 +14,8 @@
 (install-packages '(company
                     scala-mode2
                     yaml-mode
-                    markdown-mode))
+                    markdown-mode
+                    toml))
 
 ;;; Javascript
 
@@ -43,17 +44,15 @@
                     kibit-mode
                     paredit))
 
-;; Eldoc
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-
 (require 'cider)
 (setq cider-show-error-buffer nil)
 (setq nrepl-hide-special-buffers t)
 
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (flycheck-mode)
-            (company-mode)))
+(add-hook 'clojure-mode-hook #'company-mode)
+(add-hook 'clojure-mode-hook #'flycheck-mode)
+
+;; Eldoc
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
 ;; Cider refresh
 (defun cider-namespace-refresh ()
@@ -100,6 +99,11 @@
                                          (shrink-dir-names (replace-home (eshell/pwd)))
                                          " $ ")))))
 
+(eval-after-load 'python-mode
+  '(progn
+     (setq python-indent-offset 4)
+     (subword-mode +1)))
+
 ;; Venv mode line
 (setq-default mode-line-format
               (cons '(:exec venv-current-name) mode-line-format))
@@ -125,20 +129,29 @@
 ;; Flycheck
 (require 'flycheck)
 (setq flycheck-flake8rc "~/.flake8rc")
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
 
 ;;; Rust
 
 (install-packages '(rust-mode
-                    flycheck-rust))
-
-(eval-after-load 'python-mode
-  '(progn
-     (setq python-indent-offset 4)
-     (subword-mode +1)))
+                    flycheck-rust
+                    racer
+                    rustfmt))
 
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
+;; Racer
+(require 'racer)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(setq racer-cmd "~/src/racer/target/release/racer")
+(setq racer-rust-src-path "~/src/rustc-1.5.0/src/")
+
+(define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer)
 
 ;;; Ruby
 
@@ -154,6 +167,10 @@
 (eval-after-load 'ruby-mode
   '(progn
      (subword-mode +1)))
+
+;; Flycheck
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
 
 ;;; Go
 

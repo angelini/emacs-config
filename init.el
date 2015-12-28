@@ -39,7 +39,8 @@
     isend-mode
     scratch
     toggle-quotes
-    smartparens))
+    smartparens
+    company))
 
 (defvar require-refresh t)
 
@@ -131,8 +132,6 @@
 (setq flycheck-check-syntax-automatically '(save
                                             mode-enabled))
 (add-hook 'after-init-hook #'global-flycheck-mode)
-(with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
 
 ;; Org file
 (define-key global-map (kbd "C-c t")
@@ -213,6 +212,11 @@
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 (define-key global-map (kbd "C-c k") 'kill-other-buffers)
+
+;; Company mode
+(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
 
 ;; Toggle quotes
 (global-set-key (kbd "C-'") 'toggle-quotes)
