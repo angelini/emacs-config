@@ -149,7 +149,7 @@
 (add-hook 'racer-mode-hook #'company-mode)
 
 (setq racer-cmd "~/src/racer/target/release/racer")
-(setq racer-rust-src-path "~/src/rustc-1.5.0/src/")
+(setq racer-rust-src-path "~/src/rustc-1.6-beta1/src/")
 
 (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer)
 
