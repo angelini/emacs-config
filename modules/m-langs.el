@@ -41,7 +41,6 @@
 
 (install-packages '(clojure-mode
                     cider
-                    kibit-mode
                     paredit))
 
 (require 'cider)
@@ -67,70 +66,25 @@
 
 ;;; Python
 
-(install-packages '(jedi
-                    virtualenvwrapper
-                    pytest
-                    ob-ipython))
+(install-packages '(elpy
+                    ob-ipython
+                    ))
+(elpy-enable)
 
-(require 'python)
-
-(defun replace-home (pwd)
-  "Replace home dir in PWD with ~."
-  (replace-regexp-in-string "^/Users/alexangelini" "~" pwd))
-
-(defun shrink-dir-names (pwd)
-  "Shrink all dir names except the last one in PWD."
-  ((lambda (d-list)
-     (concat
-      (mapconcat (lambda (d) (if (string= "" d) "" (substring d 0 1)))
-                 (butlast d-list)
-                 "/")
-      (when (> (length d-list) 1) "/")
-      (car (last d-list))))
-   (split-string pwd "/")))
-
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells)
-(venv-initialize-eshell)
-
-(custom-set-variables '(eshell-prompt-function
-                        (quote (lambda ()
-                                 (concat "(" venv-current-name ") "
-                                         (shrink-dir-names (replace-home (eshell/pwd)))
-                                         " $ ")))))
-
-(eval-after-load 'python-mode
-  '(progn
-     (setq python-indent-offset 4)
-     (subword-mode +1)))
-
-;; Venv mode line
-(setq-default mode-line-format
-              (cons '(:exec venv-current-name) mode-line-format))
-
-;; Enable venv
-(when (file-exists-p "~/.virtualenvs")
-  (setq venv-location "~/.virtualenvs/")
-  (venv-workon "sc"))
-
-;; Jedi
-(require 'jedi)
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-(setq jedi:get-in-function-call-delay 10000)
-
-;; py.test
-(require 'pytest)
-(setq pytest-global-name "py.test")
-(add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-m") 'pytest-module)))
-
-;; Flycheck
-(require 'flycheck)
-(setq flycheck-flake8rc "~/.flake8rc")
-(with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
+(setq elpy-rpc-backend "jedi")
+(when (executable-find "ipython")
+  (elpy-use-ipython))
+(pyvenv-workon "starscream")
+;; And custom keybindings
+(defun elpy:setup-keys ()
+  (local-set-key (kbd "M-.") 'elpy-goto-definition)
+  (local-set-key (kbd "M-,") 'pop-tag-mark)
+  (local-set-key (kbd "M-?") 'elpy-doc)
+  (local-set-key (kbd "C-<down>") 'elpy-nav-forward-block)
+  (local-set-key (kbd "C-<up>") 'elpy-nav-backward-block)
+  (local-set-key (kbd "C-<left>") 'elpy-nav-backward-ident)
+  (local-set-key (kbd "C-<right>") 'elpy-nav-forward-ident))
+(add-hook 'python-mode-hook 'elpy:setup-keys)
 
 ;;; Rust
 

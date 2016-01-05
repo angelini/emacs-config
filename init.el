@@ -34,6 +34,7 @@
   '(org
     yasnippet
     magit
+    diff-hl
     multi-term
     flycheck
     isend-mode
@@ -97,6 +98,7 @@
 ;; Magit
 (global-set-key (kbd "C-c m") 'magit-status)
 (setq magit-last-seen-setup-instructions "1.4.0")
+(add-hook 'prog-mode-hook 'turn-on-diff-hl-mode)
 
 ;; Symlinks
 (setq vc-follow-symlinks t)
@@ -134,15 +136,15 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Org file
-(define-key global-map (kbd "C-c t")
-  (lambda()
-    (interactive)
-    (find-file "/Users/alexangelini/Dropbox/org/work.org")))
+;; (define-key global-map (kbd "C-c t")
+;;   (lambda()
+;;     (interactive)
+;;     (find-file "/Users/alexangelini/Dropbox/org/work.org")))
 
-(define-key global-map (kbd "C-c y")
-  (lambda()
-    (interactive)
-    (find-file "/Users/alexangelini/Dropbox/org/home.org")))
+;; (define-key global-map (kbd "C-c y")
+;;   (lambda()
+;;     (interactive)
+;;     (find-file "/Users/alexangelini/Dropbox/org/home.org")))
 
 ;; Org babel
 (org-babel-do-load-languages
@@ -153,14 +155,20 @@
 (setq org-confirm-babel-evaluate nil)
 
 ;; Org Trello
-(custom-set-variables '(org-trello-files '("/path/to/file0" "/path/to/file1")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(elpy-rpc-backend "jedi")
+ '(org-trello-files (quote ("/path/to/file0" "/path/to/file1"))))
 
 
 ;; Starscream
 (define-key global-map (kbd "C-c s")
   (lambda()
     (interactive)
-    (find-file "/Users/alexangelini/src/starscream/starscream/conf/schedule.yml")))
+    (find-file "/Users/solackerman/Repos/starscream/starscream/conf/schedule.yml")))
 
 
 ;; Snippets
@@ -171,13 +179,13 @@
 (define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)
 
 ;; Shell
-(require 'term)
-(add-hook 'term-mode-hook (lambda ()
-                            (define-key term-raw-map (kbd "M-v") 'term-paste)))
+;;(require 'term)
+;;(add-hook 'term-mode-hook (lambda ()
+;;                            (define-key term-raw-map (kbd "M-v") 'term-paste)))
 
 ;; isend-mode
-(add-hook 'isend-mode-hook 'isend-default-shell-setup)
-(add-hook 'isend-mode-hook 'isend-default-ipython-setup)
+;;(add-hook 'isend-mode-hook 'isend-default-shell-setup)
+;;(add-hook 'isend-mode-hook 'isend-default-ipython-setup)
 
 ;; Revert all buffers
 (defun revert-buffer-keep-undo ()
@@ -224,6 +232,12 @@
 ;; Smart Parens
 (require 'smartparens-config)
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:

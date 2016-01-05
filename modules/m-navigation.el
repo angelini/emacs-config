@@ -15,10 +15,12 @@
                     projectile
                     helm
                     helm-projectile
-                    helm-ag))
+                    helm-ag
+                    tabbar))
 
 (require 'helm-config)
 (require 'helm-projectile)
+(require 'tabbar)
 
 (helm-mode 1)
 
@@ -51,6 +53,13 @@
 ;; Multiple windows
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-`") 'other-frame)
+
+;; tabs
+(global-set-key (kbd "s-<left>") 'tabbar-backward-tab)
+(global-set-key (kbd "s-<right>") 'tabbar-forward-tab)
+(when (require 'tabbar nil t)
+  ;; Enable tabbars globally:
+  (tabbar-mode 1))
 
 ;; Avy
 (global-set-key (kbd "C-;") 'avy-goto-char)
