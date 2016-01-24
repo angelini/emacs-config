@@ -200,5 +200,10 @@
             (setq truncate-lines t)
             (setq word-wrap t)))
 
+;;; C
+
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
 (provide 'm-langs)
 ;;; m-langs.el ends here

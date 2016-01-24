@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: debug
+# key: i
+# --
+debug("${1:var}: %$2", $1);$0
