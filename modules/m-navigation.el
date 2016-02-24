@@ -75,6 +75,20 @@ With argument, do this that many times."
 
 (global-set-key (kbd "M-DEL") 'backward-delete-word)
 
+;; iSearch recenter
+(defadvice
+  isearch-repeat-forward
+  (after isearch-repeat-forward-recenter activate)
+  (recenter))
+
+(defadvice
+  isearch-repeat-backward
+  (after isearch-repeat-backward-recenter activate)
+  (recenter))
+
+(ad-activate 'isearch-repeat-forward)
+(ad-activate 'isearch-repeat-backward)
+
 (provide 'm-navigation)
 
 ;;; m-navigation.el ends here
