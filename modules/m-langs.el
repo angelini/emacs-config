@@ -142,6 +142,10 @@
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (local-set-key (kbd "TAB") #'company-indent-or-complete-common)))
+
 ;; Racer
 (require 'racer)
 (add-hook 'rust-mode-hook #'racer-mode)

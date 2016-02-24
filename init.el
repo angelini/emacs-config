@@ -214,7 +214,6 @@
 (define-key global-map (kbd "C-c k") 'kill-other-buffers)
 
 ;; Company mode
-(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
 (setq company-tooltip-align-annotations t)
 
 
