@@ -26,6 +26,8 @@
       helm-buffers-fuzzy-matching t
       helm-display-header-line nil)
 
+(global-set-key (kbd "M-x") 'helm-M-x)
+
 ;; Scrolling
 (setq scroll-margin 0
       scroll-conservatively 100000
