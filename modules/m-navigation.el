@@ -15,7 +15,8 @@
                     projectile
                     helm
                     helm-projectile
-                    helm-ag))
+                    helm-ag
+                    dumb-jump))
 
 (require 'helm-config)
 (require 'helm-projectile)
@@ -61,6 +62,9 @@
 ;; Ag
 (global-set-key (kbd "M-s") 'helm-do-ag-project-root)
 (global-set-key (kbd "M-S") 'helm-do-ag-this-file)
+
+;; Dumb Jump
+(dumb-jump-mode)
 
 ;; Delete word
 (defun delete-word (arg)
