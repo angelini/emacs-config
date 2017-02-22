@@ -209,5 +209,24 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
+;;; Lua
+
+(install-packages '(lua-mode))
+
+;;; Racket
+
+(install-packages '(racket-mode))
+(setq tab-always-indent 'complete)
+
+
+;; ;;; Text
+
+;; (add-hook 'text-mode-hook
+;;           (lambda ()
+;;              (setq indent-tabs-mode nil)
+;;              (setq tab-width 2)
+;;              (setq indent-line-function (quote insert-tab))))
+
 (provide 'm-langs)
+
 ;;; m-langs.el ends here
