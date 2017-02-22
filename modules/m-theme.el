@@ -40,4 +40,4 @@
 
 (provide 'm-theme)
 
-;;; m-theme.el ends here
+;;; m-theme.el ends here.

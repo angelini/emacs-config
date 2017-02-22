@@ -20,8 +20,9 @@
 (when window-system (set-path-from-shell-PATH))
 
 ;; Meta and alt keys
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'super)
+(when (display-graphic-p)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'super))
 
 (provide 'm-osx)
 
