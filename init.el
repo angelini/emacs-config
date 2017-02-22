@@ -123,6 +123,7 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; Scratch
+(setq initial-scratch-message "")
 (setq initial-major-mode 'text-mode)
 
 ;; Whitespace
@@ -152,15 +153,14 @@
 
 (setq org-confirm-babel-evaluate nil)
 
-;; Org Trello
-(custom-set-variables '(org-trello-files '("/path/to/file0" "/path/to/file1")))
-
-
 ;; Starscream
 (define-key global-map (kbd "C-c s")
   (lambda()
     (interactive)
-    (find-file "/Users/alexangelini/src/starscream/starscream/conf/schedule.yml")))
+    (with-output-to-temp-buffer "*schedule*"
+      (shell-command "/Users/alexangelini/src/starscream/bin/schedule_yaml" "*schedule*" "*Messages*")
+      (pop-to-buffer "*schedule*")
+      (yaml-mode))))
 
 
 ;; Snippets
@@ -215,7 +215,7 @@
 
 ;; Company mode
 (setq company-tooltip-align-annotations t)
-
+(setq company-idle-delay 0)
 
 ;; Toggle quotes
 (global-set-key (kbd "C-'") 'toggle-quotes)
