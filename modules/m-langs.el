@@ -46,13 +46,11 @@
 
 (require 'cider)
 (setq cider-show-error-buffer nil)
+(setq cider-repl-display-help-banner nil)
 (setq nrepl-hide-special-buffers t)
 
 (add-hook 'clojure-mode-hook #'company-mode)
 (add-hook 'clojure-mode-hook #'flycheck-mode)
-
-;; Eldoc
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
 ;; Cider refresh
 (defun cider-namespace-refresh ()
@@ -130,6 +128,7 @@
 (require 'flycheck)
 (setq flycheck-flake8rc "~/.flake8rc")
 (with-eval-after-load 'flycheck
+  (setq-default flycheck-rust-crate-type "lib")
   (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
 
 ;;; Rust
@@ -139,11 +138,18 @@
                     racer
                     rustfmt))
 
+(defun flycheck-rust-binary-crate-p (project-root)
+  "Determine whether PROJECT-ROOT is a binary crate.
+PROJECT-ROOT is the path to the root directory of the project.
+Return non-nil if PROJECT-ROOT is a binary crate, nil otherwise."
+  nil)
+
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (add-hook 'rust-mode-hook
           (lambda ()
+            (setq-local flycheck-rust-crate-type "lib")
             (local-set-key (kbd "TAB") #'company-indent-or-complete-common)))
 
 ;; Racer
