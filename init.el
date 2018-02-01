@@ -1,115 +1,48 @@
-;;; init.el --- Initialize and load modules
-
-;; Copyright (c) 2014 Alex Angelini
-;;
-;; Author: Alex Angelini <alex.louis.angelini@gmail.com>
-;; Version: 0.0.1
-
-;;; Commentary:
-
-;; Load modules
-
-;;; Code:
-
-;; Always load newest byte code
-(setq load-prefer-newer t)
-
-(require 'cl)
-(require 'package)
-
-(defvar root-dir (file-name-directory (or load-file-name buffer-file-name)))
-(defvar modules-dir (expand-file-name "modules" root-dir))
-
-(add-to-list 'load-path modules-dir)
+;; init.el -*- lexical-binding: t; -*-
 
 (package-initialize)
 
-(setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")
-        ("melpa" . "http://melpa.milkbox.net/packages/")
-        ("marmalade" . "http://marmalade-repo.org/packages/")))
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+(require 'pallet)
 
-(defvar package-list
-  '(org
-    yasnippet
-    magit
-    multi-term
-    flycheck
-    isend-mode
-    scratch
-    toggle-quotes
-    smartparens
-    company))
+(require 'f)
+(require 'use-package)
 
-(defvar require-refresh t)
+(defun load-local (file)
+  (load (f-expand file user-emacs-directory)))
 
-(defun refresh-packages ()
-  "Refresh packages at most once."
-  (when require-refresh
-    (package-refresh-contents)
-    (setq require-refresh nil)))
+(load-local "defuns")
 
-(defun all-installed-p ()
-  "Check that all packages are installed."
-  (cl-every #'package-installed-p package-list))
-
-(defun install-package (package)
-  "Install PACKAGE unless it's already installed."
-  (unless (memq package package-list)
-    (add-to-list 'package-list package))
-  (unless (package-installed-p package)
-    (refresh-packages)
-    (package-install package)))
-
-(defun install-packages (packages)
-  "Install PACKAGES unless they are already installed."
-  (mapc 'install-package packages))
-
-(unless (all-installed-p)
-  (install-packages package-list))
-
-(require 'm-navigation)
-(require 'm-theme)
-(require 'm-langs)
-
-;; OSX specific settings
-(when (eq system-type 'darwin)
-  (require 'm-osx))
-
-;; Increase GC threshold to 50MB
-(setq gc-cons-threshold 50000000)
-
-;; Increase file size warning to 100MB
-(setq large-file-warning-threshold 100000000)
-
-;; Set UTF-8 as the default language env
-(set-language-environment "UTF-8")
-
-;; Copy & paste
-(global-set-key (kbd "M-c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "M-w") 'clipboard-kill-region)
-(global-set-key (kbd "M-v") 'clipboard-yank)
-
-;; Splash screen
-(setq inhibit-splash-screen t)
-
-;; Magit
-(global-set-key (kbd "C-c m") 'magit-status)
-(setq magit-last-seen-setup-instructions "1.4.0")
-
-;; Symlinks
-(setq vc-follow-symlinks t)
+(set-path-from-shell-PATH)
+(setq default-directory (f-full (getenv "HOME")))
 
 ;; Default mode
 (setq-default major-mode 'text-mode)
 
-;; Server
-(server-start)
+;; Theme
+(load-theme 'zenburn t)
+(set-face-attribute 'default nil :height 140 :family "Source Code Pro")
 
-;; Buffer names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
+(setq ring-bell-function 'ignore)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(setq inhibit-splash-screen t)
+(set-default 'truncate-lines t)
+
+;; Scrolling
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1
+      scroll-step 1)
+
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
+
+;; Navigation
+(windmove-default-keybindings 'meta)
+(global-set-key (kbd "M-DEL") 'backward-delete-word)
 
 ;; Backup files
 (setq make-backup-files nil)
@@ -122,6 +55,13 @@
 (setq-default tab-stop-list (number-sequence 4 120 4))
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; Parens
+(require 'smartparens-config)
+(show-paren-mode 1)
+
+;; Toggle quotes
+(global-set-key (kbd "C-'") 'toggle-quotes)
+
 ;; Scratch
 (setq initial-scratch-message "")
 (setq initial-major-mode 'text-mode)
@@ -129,102 +69,113 @@
 ;; Whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; Flycheck
-(setq flycheck-check-syntax-automatically '(save
-                                            mode-enabled))
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;; Copy & paste
+(global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "C-S-x") 'clipboard-kill-region)
+(global-set-key (kbd "C-S-v") 'clipboard-yank)
 
-;; Org file
-(define-key global-map (kbd "C-c t")
-  (lambda()
-    (interactive)
-    (find-file "/Users/alexangelini/Dropbox/org/work.org")))
+;; Symlinks
+(setq vc-follow-symlinks t)
 
-(define-key global-map (kbd "C-c y")
-  (lambda()
-    (interactive)
-    (find-file "/Users/alexangelini/Dropbox/org/home.org")))
+;; Unique buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 
-;; Org babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((python . t)
-   (ipython . t)))
+;; Packages
+(use-package company
+             :init (global-company-mode)
+             :bind (("TAB" . #'company-indent-or-complete-common))
+             :config (setq company-tooltip-align-annotations t
+                           company-idle-delay 0))
 
-(setq org-confirm-babel-evaluate nil)
+(use-package dumb-jump
+             :init (dumb-jump-mode))
 
-;; Starscream
-(define-key global-map (kbd "C-c s")
-  (lambda()
-    (interactive)
-    (with-output-to-temp-buffer "*schedule*"
-      (shell-command "/Users/alexangelini/src/starscream/bin/schedule_yaml" "*schedule*" "*Messages*")
-      (pop-to-buffer "*schedule*")
-      (yaml-mode))))
+(use-package flycheck
+             :config
+             (progn
+               (setq flycheck-check-syntax-automatically '(save
+                                                           mode-enabled)
+                     flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc))
+               (add-hook 'after-init-hook #'global-flycheck-mode)))
 
+(use-package helm
+             :init (helm-mode 1)
+             :bind (("M-x" . helm-M-x)
+                    ("M-s" . helm-do-grep-ag))
+             :config (setq helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"))
 
-;; Snippets
-(require 'yasnippet)
-(yas-global-mode 1)
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-(define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)
+(use-package helm-projectile
+             :init (helm-projectile-on)
+             :config (setq projectile-completion-system 'helm
+                           projectile-switch-project-action 'helm-projectile))
 
-;; Shell
-(require 'term)
-(add-hook 'term-mode-hook (lambda ()
-                            (define-key term-raw-map (kbd "M-v") 'term-paste)))
+(use-package magit
+             :bind (("C-c m" . magit-status)))
 
-;; isend-mode
-(add-hook 'isend-mode-hook 'isend-default-shell-setup)
-(add-hook 'isend-mode-hook 'isend-default-ipython-setup)
+(use-package projectile
+             :init (projectile-global-mode))
 
-;; Revert all buffers
-(defun revert-buffer-keep-undo ()
-  "Revert buffer but keep undo history."
-  (interactive)
-  (let ((inhibit-read-only t))
-    (clear-visited-file-modtime)
-    (erase-buffer)
-    (insert-file-contents (buffer-file-name))
-    (set-visited-file-modtime)
-    (set-buffer-modified-p nil)))
+(use-package web-mode)
 
-(defun revert-all-buffers ()
-  "Refreshes all open buffers from their respective files."
-  (interactive)
-  (dolist (buf (buffer-list))
-    (with-current-buffer buf
-      (when (and (buffer-file-name)
-                 (file-exists-p (buffer-file-name))
-                 (not (buffer-modified-p)))
-        (revert-buffer-keep-undo))))
-  (message "Refreshed open files."))
+(use-package yasnippet
+             :init (yas-global-mode 1)
+             :config
+             (progn
+               (define-key yas-minor-mode-map (kbd "<tab>") nil)
+               (define-key yas-minor-mode-map (kbd "TAB") nil)
+               (define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)))
 
-(define-key global-map (kbd "C-c r") 'revert-all-buffers)
+;; Language Packages
+(use-package cider
+             :config (setq cider-show-error-buffer nil
+                           nrepl-hide-special-buffers t))
 
-;; Close all other buffers
-(defun kill-other-buffers ()
-  "Kill all other buffers."
-  (interactive)
-  (mapc 'kill-buffer
-        (delq (current-buffer)
-              (remove-if-not 'buffer-file-name (buffer-list)))))
+(use-package clojure-mode
+             :config (add-hook 'clojure-mode-hook #'smartparens-mode))
 
-(define-key global-map (kbd "C-c k") 'kill-other-buffers)
+(use-package company-jedi
+             :config (add-hook 'python-mode (lambda ()
+                                              (add-to-list 'company-backends 'company-jedi))))
 
-;; Company mode
-(setq company-tooltip-align-annotations t)
-(setq company-idle-delay 0)
+(use-package flycheck-rust
+             :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
-;; Toggle quotes
-(global-set-key (kbd "C-'") 'toggle-quotes)
+(use-package pyenv-mode
+             :init (pyenv-mode)
+             :config (add-hook 'projectile-switch-project-hook 'projectile-pyenv-mode-set))
 
-;; Smart Parens
-(require 'smartparens-config)
+(use-package racer
+             :config
+             (progn
+               (add-hook 'rust-mode-hook #'racer-mode)
+               (add-hook 'race-mode-hook #'eldoc-mode)))
 
-;; Local Variables:
-;; byte-compile-warnings: (not cl-functions)
-;; End:
+(use-package racket-mode)
 
-;;; init.el ends here
+(use-package rust-mode
+             :config (add-hook 'rust-mode-hook #'smartparens-mode))
+
+;; C Mode
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
+;; Python Mode
+(add-hook 'python-mode #'smartparens-mode)
+
+;; Ruby Mode
+(add-hook 'ruby-mode #'smartparens-mode)
+(add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.gemspec\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile\\'" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Vagrantfile\\'" . ruby-mode))
+
+;; Shell Mode
+(add-hook 'sh-mode-hook (lambda ()
+                          (setq sh-basic-offset 2
+                                sh-indentation 2)))
+
+;; MacOS overrides
+(when (eq system-type 'darwin)
+  (load-local "osx"))
