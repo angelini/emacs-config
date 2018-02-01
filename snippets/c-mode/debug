@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: debug
-# key: i
-# --
-debug("${1:var}: %${2:format}", $1);$0
