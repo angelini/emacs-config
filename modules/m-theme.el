@@ -16,7 +16,7 @@
 
 (load-theme 'zenburn t)
 
-(set-face-attribute 'default nil :height 140 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 120 :family "Source Code Pro")
 
 ;; Bell
 (setq ring-bell-function 'ignore)

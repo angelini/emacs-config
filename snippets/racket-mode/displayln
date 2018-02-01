@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: displayln
+# key: p
+# --
+(displayln (format "${1:var}: ~a" $1))$0

@@ -49,12 +49,6 @@
 ;; Window move
 (windmove-default-keybindings 'meta)
 
-;; Support for Putty (Windows)
-(global-set-key (kbd "C-c <left>")  'windmove-left)
-(global-set-key (kbd "C-c <right>") 'windmove-right)
-(global-set-key (kbd "C-c <up>")    'windmove-up)
-(global-set-key (kbd "C-c <down>")  'windmove-down)
-
 ;; Multiple windows
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-`") 'other-frame)

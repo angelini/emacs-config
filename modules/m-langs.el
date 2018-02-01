@@ -12,7 +12,7 @@
 ;;; Code:
 
 (install-packages '(company
-                    scala-mode2
+                    scala-mode
                     yaml-mode
                     markdown-mode
                     toml))
@@ -41,7 +41,6 @@
 
 (install-packages '(clojure-mode
                     cider
-                    kibit-mode
                     paredit))
 
 (require 'cider)
@@ -130,7 +129,7 @@
 (require 'flycheck)
 (setq flycheck-flake8rc "~/.flake8rc")
 (with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
+  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby emacs-lisp-checkdoc)))
 
 ;;; Rust
 
@@ -153,13 +152,11 @@
 (add-hook 'racer-mode-hook #'company-mode)
 
 (setq racer-cmd "~/src/racer/target/release/racer")
-(setq racer-rust-src-path "~/src/rustc-1.6-beta1/src/")
+(setq racer-rust-src-path "~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
 
 (define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer)
 
 ;;; Ruby
-
-(install-package 'inf-ruby)
 
 ;; Add other file types as ruby files
 (add-to-list 'auto-mode-alist '("\\.rake\\'" . ruby-mode))
@@ -174,7 +171,7 @@
 
 ;; Flycheck
 (with-eval-after-load 'flycheck
-  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
+  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby emacs-lisp-checkdoc)))
 
 ;;; Go
 
@@ -217,7 +214,6 @@
 
 (install-packages '(racket-mode))
 (setq tab-always-indent 'complete)
-
 
 ;; ;;; Text
 

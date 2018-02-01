@@ -87,12 +87,21 @@
 (set-language-environment "UTF-8")
 
 ;; Copy & paste
-(global-set-key (kbd "M-c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "M-w") 'clipboard-kill-region)
-(global-set-key (kbd "M-v") 'clipboard-yank)
+(global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
+(global-set-key (kbd "C-S-x") 'clipboard-kill-region)
+(global-set-key (kbd "C-S-v") 'clipboard-yank)
 
 ;; Splash screen
 (setq inhibit-splash-screen t)
+
+;; Path
+(defun set-path-from-shell-PATH ()
+  "Copy the value of bash's PATH into the envionrment."
+  (let ((path (shell-command-to-string "source $HOME/.bashrc && printf $PATH")))
+    (setenv "PATH" path)
+    (setq exec-path (split-string path ":"))))
+
+(when window-system (set-path-from-shell-PATH))
 
 ;; Magit
 (global-set-key (kbd "C-c m") 'magit-status)
@@ -223,7 +232,29 @@
 ;; Smart Parens
 (require 'smartparens-config)
 
-;; Local Variables:
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(eshell-prompt-function
+   (quote
+    (lambda nil
+      (concat "(" venv-current-name ") "
+              (shrink-dir-names
+               (replace-home
+                (eshell/pwd)))
+              " $ "))))
+ '(package-selected-packages
+   (quote
+    (lua-mode dumb-jump zenburn-theme yasnippet yaml-mode virtualenvwrapper toml toggle-quotes smartparens scratch scala-mode rustfmt racket-mode racer pytest paredit ob-ipython multi-term markdown-mode magit js2-mode jedi isend-mode inf-ruby helm-projectile helm-ag go-mode flycheck-rust company color-theme-solarized coffee-mode cider avy))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+ ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:
 
