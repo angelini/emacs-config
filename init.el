@@ -102,7 +102,7 @@
 (use-package helm
              :init (helm-mode 1)
              :bind (("M-x" . helm-M-x)
-                    ("M-s" . helm-do-grep-ag))
+                    ("M-s" . helm-do-grep-ag-root))
              :config (setq helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"))
 
 (use-package helm-projectile

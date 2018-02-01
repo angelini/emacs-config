@@ -24,3 +24,8 @@ With argument, do this that many times."
     (if (member project (pyenv-mode-versions))
         (pyenv-mode-set project)
       (pyenv-mode-unset))))
+
+(defun helm-do-grep-ag-root (arg)
+  "Search the projectile project root for ARG."
+  (interactive "P")
+  (helm-grep-ag (projectile-project-root) arg))
