@@ -12,7 +12,7 @@
 ;;; Code:
 
 (install-packages '(company
-                    scala-mode2
+                    scala-mode
                     yaml-mode
                     markdown-mode
                     toml))
@@ -41,7 +41,6 @@
 
 (install-packages '(clojure-mode
                     cider
-                    kibit-mode
                     paredit))
 
 (require 'cider)
@@ -107,9 +106,9 @@
               (cons '(:exec venv-current-name) mode-line-format))
 
 ;; Enable venv
-(when (file-exists-p "~/.virtualenvs")
-  (setq venv-location "~/.virtualenvs/")
-  (venv-workon "sc"))
+(when (file-exists-p "~/.pyenv")
+  (venv-set-location "/Users/alexangelini/.pyenv/virtualenvs/starscream")
+  (venv-workon "2.7.11"))
 
 ;; Jedi
 (require 'jedi)
@@ -126,17 +125,16 @@
 
 ;; Flycheck
 (require 'flycheck)
-(setq flycheck-flake8rc "~/.flake8rc")
+(setq flycheck-pylintrc "/Users/alexangelini/src/github.com/Shopify/starscream/pylintrc")
 (with-eval-after-load 'flycheck
   (setq-default flycheck-rust-crate-type "lib")
-  (setq-default flycheck-disabled-checkers '(ruby ruby-rubocop ruby-jruby)))
+  (setq-default flycheck-disabled-checkers '(python-flake8 ruby ruby-rubocop ruby-jruby)))
 
 ;;; Rust
 
 (install-packages '(rust-mode
                     flycheck-rust
-                    racer
-                    rustfmt))
+                    racer))
 
 (defun flycheck-rust-binary-crate-p (project-root)
   "Determine whether PROJECT-ROOT is a binary crate.
@@ -158,10 +156,10 @@ Return non-nil if PROJECT-ROOT is a binary crate, nil otherwise."
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 
-(setq racer-cmd "~/src/racer/target/release/racer")
-(setq racer-rust-src-path "~/src/rustc-1.6-beta1/src/")
+;; (setq racer-cmd "~/src/racer/target/release/racer")
+(setq racer-rust-src-path "~/.rustup/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src")
 
-(define-key rust-mode-map (kbd "C-c C-f") #'rustfmt-format-buffer)
+(define-key rust-mode-map (kbd "C-c C-f") #'rust-format-buffer)
 
 ;;; Ruby
 

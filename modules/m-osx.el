@@ -13,11 +13,13 @@
 
 (defun set-path-from-shell-PATH ()
   "Copy the value of zsh's PATH into the envionrment."
-  (let ((path (shell-command-to-string "source $HOME/.profile && printf $PATH")))
+  (let ((path (shell-command-to-string "source $HOME/.bashrc && printf $PATH")))
     (setenv "PATH" path)
     (setq exec-path (split-string path ":"))))
 
 (when window-system (set-path-from-shell-PATH))
+
+(setq dired-use-ls-dired nil)
 
 ;; Meta and alt keys
 (when (display-graphic-p)

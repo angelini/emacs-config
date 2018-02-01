@@ -104,9 +104,6 @@
 ;; Default mode
 (setq-default major-mode 'text-mode)
 
-;; Server
-(server-start)
-
 ;; Buffer names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -223,7 +220,29 @@
 ;; Smart Parens
 (require 'smartparens-config)
 
-;; Local Variables:
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(eshell-prompt-function
+   (quote
+    (lambda nil
+      (concat "(" venv-current-name ") "
+              (shrink-dir-names
+               (replace-home
+                (eshell/pwd)))
+              " $ "))))
+ '(package-selected-packages
+   (quote
+    (racket-mode lua-mode go-mode inf-ruby zenburn-theme yasnippet yaml-mode virtualenvwrapper toml toggle-quotes smartparens scratch scala-mode racer pytest paredit ob-ipython multi-term markdown-mode magit js2-mode jedi isend-mode helm-projectile helm-ag flycheck-rust dumb-jump company color-theme-solarized coffee-mode cider avy))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+ ;; Local Variables:
 ;; byte-compile-warnings: (not cl-functions)
 ;; End:
 
