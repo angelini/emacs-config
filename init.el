@@ -19,6 +19,11 @@
 
 ;; Default mode
 (setq-default major-mode 'text-mode)
+(set-language-environment "UTF-8")
+
+;; Default Thresholds
+(setq gc-cons-threshold 500000000) ;; 500MB
+(setq large-file-warning-threshold 100000000) ;; 100MB
 
 ;; Theme
 (load-theme 'zenburn t)
