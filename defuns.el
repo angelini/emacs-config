@@ -18,6 +18,11 @@ With argument, do this that many times."
     (setenv "PATH" path)
     (setq exec-path (split-string path ":"))))
 
+(defun interactive-project-name (_)
+  "Displays projectile project name in the minibuffer."
+  (interactive "p")
+  (message (projectile-project-name)))
+
 (defun projectile-pyenv-mode-set ()
   "Set pyenv version matching project name."
   (let ((project (projectile-project-name)))
