@@ -99,9 +99,8 @@
 (use-package flycheck
              :config
              (progn
-               (setq flycheck-check-syntax-automatically '(save
-                                                           mode-enabled)
-                     flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc))
+               (setq flycheck-check-syntax-automatically '(save mode-enabled))
+               (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc))
                (add-hook 'after-init-hook #'global-flycheck-mode)))
 
 (use-package helm
