@@ -3,13 +3,13 @@
 (defun delete-word (arg)
   "Delete characters forward from ARG until encountering the end of a word.
 With argument, do this that many times."
-  (interactive "p")
+  (interactive "P")
   (delete-region (point) (progn (forward-word arg) (point))))
 
 (defun backward-delete-word (arg)
   "Delete characters backward from ARG until encountering the end of a word.
 With argument, do this that many times."
-  (interactive "p")
+  (interactive "P")
   (delete-word (- arg)))
 
 (defun set-path-from-shell-PATH ()
@@ -18,10 +18,10 @@ With argument, do this that many times."
     (setenv "PATH" path)
     (setq exec-path (split-string path ":"))))
 
-(defun interactive-project-name (_)
-  "Displays projectile project name in the minibuffer."
-  (interactive "p")
-  (message (projectile-project-name)))
+(defun helm-ag-project-root (arg)
+  "Use AG to search the projectile project root for ARG."
+  (interactive "P")
+  (helm-grep-ag (projectile-project-root) arg))
 
 (defun projectile-pyenv-mode-set ()
   "Set pyenv version matching project name."

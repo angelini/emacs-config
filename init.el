@@ -22,7 +22,7 @@
 (set-language-environment "UTF-8")
 
 ;; Default Thresholds
-(setq gc-cons-threshold 500000000) ;; 500MB
+(setq gc-cons-threshold 50000000) ;; 50MB
 (setq large-file-warning-threshold 100000000) ;; 100MB
 
 ;; Theme
@@ -107,7 +107,7 @@
 (use-package helm
   :init (helm-mode 1)
   :bind (("M-x" . helm-M-x)
-         ("M-s" . helm-do-grep-ag))
+         ("M-s" . helm-ag-project-root))
   :config (setq helm-split-window-in-side-p t
                 helm-buffers-fuzzy-matching t
                 helm-display-header-line nil
