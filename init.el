@@ -52,6 +52,8 @@
 ;; Autosave buffers
 (setq make-backup-files nil)
 (add-hook 'focus-out-hook 'save-buffer)
+(setq auto-save-default t)
+(setq auto-save-visited-file-name t)
 
 ;; Indentation settings
 (setq standard-indent 2)
@@ -97,6 +99,7 @@
   :init (dumb-jump-mode))
 
 (use-package flycheck
+  :demand t
   :config
   (progn
     (setq flycheck-check-syntax-automatically '(save mode-enabled)
