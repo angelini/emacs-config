@@ -27,7 +27,7 @@
 
 ;; Theme
 (load-theme 'zenburn t)
-(set-face-attribute 'default nil :height 140 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 160 :family "Source Code Pro")
 
 (setq ring-bell-function 'ignore)
 (scroll-bar-mode -1)
@@ -104,7 +104,7 @@
   (progn
     (setq flycheck-check-syntax-automatically '(save mode-enabled)
           flycheck-pylintrc "pylintrc")
-    (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc))
+    (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc c/c++-gcc))
     (add-hook 'after-init-hook #'global-flycheck-mode)))
 
 (use-package helm
@@ -145,12 +145,22 @@
 (use-package clojure-mode
   :config (add-hook 'clojure-mode-hook #'smartparens-mode))
 
+(use-package company-irony
+  :init (add-to-list 'company-backends 'company-irony))
+
 (use-package company-jedi
-  :config (add-hook 'python-mode (lambda ()
-                                   (add-to-list 'company-backends 'company-jedi))))
+  :init (add-to-list 'company-backends 'company-jedi))
+
+(use-package flycheck-irony
+  :config (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+
+(use-package irony
+  :config (progn
+            (add-hook 'c++-mode-hook 'irony-mode)
+            (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
 
 (use-package pyenv-mode
   :init (pyenv-mode)
@@ -164,12 +174,15 @@
 
 (use-package racket-mode)
 
-(use-package rust-mode
-  :config (add-hook 'rust-mode-hook #'smartparens-mode))
+(use-package rust-mode)
 
 ;; C Mode
-(setq c-default-style "linux"
-      c-basic-offset 4)
+(c-add-style "custom-c"
+             '("custom"
+               (c-basic-offset . 4)
+               (c-offsets-alist
+                (innamespace . -))))
+(setq c-default-style "custom-c")
 
 ;; Python Mode
 (add-hook 'python-mode #'smartparens-mode)
