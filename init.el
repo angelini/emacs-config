@@ -98,6 +98,9 @@
 (use-package dumb-jump
   :init (dumb-jump-mode))
 
+(use-package exec-path-from-shell
+  :init (exec-path-from-shell-initialize))
+
 (use-package flycheck
   :demand t
   :config
