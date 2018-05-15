@@ -16,6 +16,7 @@
 (depends-on "flycheck-cask")
 (depends-on "flycheck-irony")
 (depends-on "flycheck-rust")
+(depends-on "focus-autosave-mode")
 (depends-on "helm")
 (depends-on "helm-projectile")
 (depends-on "irony")

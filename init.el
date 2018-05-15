@@ -51,7 +51,6 @@
 
 ;; Autosave buffers
 (setq make-backup-files nil)
-(add-hook 'focus-out-hook 'save-buffer)
 (setq auto-save-default t)
 (setq auto-save-visited-file-name t)
 
@@ -109,6 +108,9 @@
           flycheck-pylintrc "pylintrc")
     (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc c/c++-gcc))
     (add-hook 'after-init-hook #'global-flycheck-mode)))
+
+(use-package focus-autosave-mode
+  :init (focus-autosave-mode))
 
 (use-package helm
   :init (helm-mode 1)
