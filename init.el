@@ -107,7 +107,10 @@
     (setq flycheck-check-syntax-automatically '(save mode-enabled)
           flycheck-pylintrc "pylintrc")
     (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc c/c++-gcc))
-    (add-hook 'after-init-hook #'global-flycheck-mode)))
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+    (add-hook 'c++-mode-hook
+              (lambda ()
+                (setq flycheck-clang-language-standard "c++11")))))
 
 (use-package focus-autosave-mode
   :init (focus-autosave-mode))
@@ -116,7 +119,7 @@
   :init (helm-mode 1)
   :bind (("M-x" . helm-M-x)
          ("M-s" . helm-ag-project-root))
-  :config (setq helm-split-window-in-side-p t
+  :config (setq helm-split-window-inside-p t
                 helm-buffers-fuzzy-matching t
                 helm-display-header-line nil
                 helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"))
@@ -130,7 +133,7 @@
   :bind (("C-c m" . magit-status)))
 
 (use-package projectile
-  :init (projectile-global-mode))
+  :init (projectile-mode))
 
 (use-package web-mode)
 
