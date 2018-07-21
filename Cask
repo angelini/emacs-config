@@ -29,6 +29,7 @@
 (depends-on "rust-mode")
 (depends-on "s")
 (depends-on "smartparens")
+(depends-on "sql-indent")
 (depends-on "use-package")
 (depends-on "web-mode")
 (depends-on "yasnippet")

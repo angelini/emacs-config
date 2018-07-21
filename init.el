@@ -184,6 +184,10 @@
 
 (use-package rust-mode)
 
+(use-package sql-indent
+  :init (eval-after-load "sql"
+          '(load-library "sql-indent")))
+
 ;; C Mode
 (c-add-style "custom-c"
              '("custom"
