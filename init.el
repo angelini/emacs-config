@@ -124,16 +124,17 @@
                 helm-display-header-line nil
                 helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"))
 
-(use-package helm-projectile
-  :init (helm-projectile-on)
-  :config (setq projectile-completion-system 'helm
-                projectile-switch-project-action 'helm-projectile))
-
 (use-package magit
   :bind (("C-c m" . magit-status)))
 
 (use-package projectile
-  :init (projectile-mode))
+  :init (projectile-mode)
+  :bind-keymap ("C-c p" . projectile-command-map))
+
+(use-package helm-projectile
+  :init (helm-projectile-on)
+  :config (setq projectile-completion-system 'helm
+                projectile-switch-project-action 'helm-projectile))
 
 (use-package web-mode)
 
