@@ -29,3 +29,13 @@ With argument, do this that many times."
     (when (and (member project (pyenv-mode-versions))
                (not (equal project (pyenv-mode-version))))
       (pyenv-mode-set project))))
+
+(defun visit-term-buffer ()
+  "Create or visit a terminal buffer."
+  (interactive)
+  (if (not (get-buffer "*ansi-term*"))
+      (progn
+        (split-window-sensibly (selected-window))
+        (other-window 1)
+        (ansi-term (getenv "SHELL")))
+    (switch-to-buffer-other-window "*ansi-term*")))

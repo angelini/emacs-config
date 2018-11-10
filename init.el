@@ -87,6 +87,9 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
+;; Terminal
+(global-set-key (kbd "C-c t") 'visit-term-buffer)
+
 ;; Packages
 (use-package company
   :init (global-company-mode)
@@ -102,30 +105,29 @@
 
 (use-package flycheck
   :demand t
-  :config
-  (progn
-    (setq flycheck-check-syntax-automatically '(save mode-enabled)
-          flycheck-pylintrc "pylintrc")
-    (setq-default flycheck-disabled-checkers '(python-flake8 emacs-lisp-checkdoc c/c++-gcc))
-    (add-hook 'after-init-hook #'global-flycheck-mode)
-    (add-hook 'c++-mode-hook
-              (lambda ()
-                (setq flycheck-clang-language-standard "c++11")))))
+  :hook  (after-init . global-flycheck-mode)
+  :config (progn
+            (setq-default flycheck-disabled-checkers '(python-flake8
+                                                       emacs-lisp-checkdoc
+                                                       c/c++-gcc))
+            (setq flycheck-check-syntax-automatically '(save mode-enabled)
+                  flycheck-pylintrc "pylintrc"
+                  flycheck-clang-language-standard "c++11")))
 
 (use-package focus-autosave-mode
-  :init (focus-autosave-mode))
+  :config (focus-autosave-mode))
 
 (use-package helm
   :init (helm-mode 1)
   :bind (("M-x" . helm-M-x)
          ("M-s" . helm-ag-project-root))
-  :config (setq helm-split-window-in-side-p t
-                helm-buffers-fuzzy-matching t
+  :config (setq helm-split-window-inside-p t
                 helm-display-header-line nil
+                helm-buffers-fuzzy-matching t
                 helm-grep-ag-command "rg --color=always --smart-case --no-heading --line-number %s %s %s"))
 
 (use-package magit
-  :bind (("C-c m" . magit-status)))
+  :bind ("C-c m" . magit-status))
 
 (use-package projectile
   :init (projectile-mode)
@@ -139,12 +141,11 @@
 (use-package web-mode)
 
 (use-package yasnippet
-  :init (yas-global-mode 1)
-  :config
-  (progn
-    (define-key yas-minor-mode-map (kbd "<tab>") nil)
-    (define-key yas-minor-mode-map (kbd "TAB") nil)
-    (define-key yas-minor-mode-map (kbd "C-y") 'yas-expand)))
+  :bind (:map yas-minor-mode-map
+              ("<tab>" . nil)
+              ("TAB" . nil)
+              ("C-y" . yas-expand))
+  :config (yas-global-mode 1))
 
 ;; Language Packages
 (use-package cider
@@ -155,35 +156,35 @@
   :config (add-hook 'clojure-mode-hook #'smartparens-mode))
 
 (use-package company-irony
-  :init (add-to-list 'company-backends 'company-irony))
-
-(use-package company-jedi
-  :init (add-to-list 'company-backends 'company-jedi))
+  :config (add-to-list 'company-backends 'company-irony))
 
 (use-package flycheck-irony
-  :config (add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+  :hook (flycheck-mode . flycheck-irony-setup))
 
 (use-package flycheck-rust
-  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  :hook (flycheck-mode . flycheck-rust-setup))
+
+(use-package go-mode
+  :init (setq gofmt-command "goimports")
+  :hook (before-save . gofmt-before-save)
+  :bind ("M-." . godef-jump))
 
 (use-package irony
-  :config (progn
-            (add-hook 'c++-mode-hook 'irony-mode)
-            (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)))
+  :hook ((c++-mode . irony-mode)
+         (irony-mode . irony-cdb-autosetup-compile-options)))
 
 (use-package pyenv-mode
-  :init (pyenv-mode)
-  :config (add-hook 'flycheck-before-syntax-check-hook #'projectile-pyenv-mode-set))
+  :config (pyenv-mode)
+  :hook (flycheck-before-syntax-check . #'projectile-pyenv-mode-set))
 
 (use-package racer
-  :config
-  (progn
-    (add-hook 'rust-mode-hook #'racer-mode)
-    (add-hook 'race-mode-hook #'eldoc-mode)))
+  :hook ((rust-mode . racer-mode)
+         (racer-mode . eldoc-mode)))
 
 (use-package racket-mode)
 
-(use-package rust-mode)
+(use-package rust-mode
+  :hook (rust-mode . smartparens-mode))
 
 (use-package sql-indent
   :init (eval-after-load "sql"
