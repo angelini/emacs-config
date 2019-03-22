@@ -28,7 +28,8 @@ With argument, do this that many times."
   (let ((project (projectile-project-name)))
     (when (and (member project (pyenv-mode-versions))
                (not (equal project (pyenv-mode-version))))
-      (pyenv-mode-set project))))
+      (pyenv-mode-set project)
+      (pyvenv-activate project))))
 
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer."

@@ -27,7 +27,7 @@
 
 ;; Theme
 (load-theme 'zenburn t)
-(set-face-attribute 'default nil :height 160 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 120 :family "Source Code Pro")
 
 (setq ring-bell-function 'ignore)
 (scroll-bar-mode -1)
@@ -95,7 +95,7 @@
   :init (global-company-mode)
   :bind (("TAB" . #'company-indent-or-complete-common))
   :config (setq company-tooltip-align-annotations t
-                company-idle-delay 0))
+                company-idle-delay 2))
 
 (use-package dumb-jump
   :init (dumb-jump-mode))
@@ -177,6 +177,9 @@
   :config (pyenv-mode)
   :hook (flycheck-before-syntax-check . #'projectile-pyenv-mode-set))
 
+(use-package elpy
+  :config (elpy-enable))
+
 (use-package racer
   :hook ((rust-mode . racer-mode)
          (racer-mode . eldoc-mode)))
@@ -189,6 +192,9 @@
 (use-package sql-indent
   :init (eval-after-load "sql"
           '(load-library "sql-indent")))
+
+(use-package utop
+  :init (setq utop-command "opam config exec -- utop -emacs"))
 
 ;; C Mode
 (c-add-style "custom-c"
