@@ -25,6 +25,10 @@
 (setq gc-cons-threshold 50000000) ;; 50MB
 (setq large-file-warning-threshold 100000000) ;; 100MB
 
+;; Console
+(unless (display-graphic-p)
+  (xterm-mouse-mode 1))
+
 ;; Theme
 (load-theme 'zenburn t)
 (set-face-attribute 'default nil :height 160 :family "Source Code Pro")
