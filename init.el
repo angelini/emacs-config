@@ -27,7 +27,7 @@
 
 ;; Theme
 (load-theme 'zenburn t)
-(set-face-attribute 'default nil :height 120 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 160 :family "Source Code Pro")
 
 (setq ring-bell-function 'ignore)
 (scroll-bar-mode -1)
@@ -105,11 +105,12 @@
 
 (use-package flycheck
   :demand t
-  :hook  (after-init . global-flycheck-mode)
+  :hook  ((after-init . global-flycheck-mode)
+          (flycheck-before-syntax-check . projectile-pyenv-mode-set))
   :config (progn
-            (setq-default flycheck-disabled-checkers '(python-flake8
-                                                       emacs-lisp-checkdoc
-                                                       c/c++-gcc))
+            (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc
+                                                       c/c++-gcc
+                                                       html-tidy))
             (setq flycheck-check-syntax-automatically '(save mode-enabled)
                   flycheck-pylintrc "pylintrc"
                   flycheck-clang-language-standard "c++11")))
@@ -174,11 +175,17 @@
          (irony-mode . irony-cdb-autosetup-compile-options)))
 
 (use-package pyenv-mode
-  :config (pyenv-mode)
-  :hook (flycheck-before-syntax-check . #'projectile-pyenv-mode-set))
+  :init (setq elpy-rpc-ignored-buffer-size 1024000)
+  :config (pyenv-mode))
 
 (use-package elpy
-  :config (elpy-enable))
+  :config (elpy-enable)
+  :bind (:map elpy-mode-map
+              ("M-<up>" . nil)
+              ("M-<down>" . nil)
+              ("M-<left>" . nil)
+              ("M-<right>" . nil))
+  :hook (elpy-mode . (lambda () (highlight-indentation-mode -1))))
 
 (use-package racer
   :hook ((rust-mode . racer-mode)
@@ -192,6 +199,8 @@
 (use-package sql-indent
   :init (eval-after-load "sql"
           '(load-library "sql-indent")))
+
+(use-package typescript-mode)
 
 (use-package utop
   :init (setq utop-command "opam config exec -- utop -emacs"))

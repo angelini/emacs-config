@@ -33,6 +33,7 @@
 (depends-on "smartparens")
 (depends-on "sql-indent")
 (depends-on "tuareg")
+(depends-on "typescript-mode")
 (depends-on "use-package")
 (depends-on "utop")
 (depends-on "web-mode")
