@@ -1,7 +1,7 @@
 ;;; console.e --- Console related configurations -*- lexical-binding: t; -*-
 
 (global-set-key (kbd "M-c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "M-x") 'clipboard-kill-region)
+(global-set-key (kbd "M-w") 'clipboard-kill-region)
 (global-set-key (kbd "M-v") 'clipboard-yank)
 
 (require 'xt-mouse)

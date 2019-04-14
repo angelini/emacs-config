@@ -10,7 +10,7 @@ With argument, do this that many times."
   "Delete characters backward from ARG until encountering the end of a word.
 With argument, do this that many times."
   (interactive "P")
-  (delete-word (- arg)))
+  (delete-word (- (if arg arg 1))))
 
 (defun set-path-from-shell-PATH ()
   "Copy the value of bash's PATH into the envionrment."
