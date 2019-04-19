@@ -97,6 +97,9 @@
   :config (setq company-tooltip-align-annotations t
                 company-idle-delay 2))
 
+(use-package deadgrep
+  :bind ("M-s" . deadgrep))
+
 (use-package dumb-jump
   :init (dumb-jump-mode))
 
@@ -120,8 +123,7 @@
 
 (use-package helm
   :init (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-         ("M-s" . helm-ag-project-root))
+  :bind (("M-x" . helm-M-x))
   :config (setq helm-split-window-inside-p t
                 helm-display-header-line nil
                 helm-buffers-fuzzy-matching t

@@ -7,6 +7,7 @@
 (depends-on "clojure-mode")
 (depends-on "company")
 (depends-on "company-irony")
+(depends-on "deadgrep")
 (depends-on "dumb-jump")
 (depends-on "elpy")
 (depends-on "ensime")
