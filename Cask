@@ -16,6 +16,7 @@
 (depends-on "f")
 (depends-on "flycheck")
 (depends-on "flycheck-cask")
+(depends-on "flycheck-mypy")
 (depends-on "flycheck-irony")
 (depends-on "flycheck-rust")
 (depends-on "focus-autosave-mode")

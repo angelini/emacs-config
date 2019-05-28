@@ -167,6 +167,9 @@
 (use-package flycheck-rust
   :hook (flycheck-mode . flycheck-rust-setup))
 
+(use-package flycheck-mypy
+  :config (flycheck-add-next-checker 'python-flake8 'python-mypy))
+
 (use-package go-mode
   :init (setq gofmt-command "goimports")
   :hook (before-save . gofmt-before-save)
@@ -202,7 +205,8 @@
   :init (eval-after-load "sql"
           '(load-library "sql-indent")))
 
-(use-package typescript-mode)
+(use-package typescript-mode
+  :init (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
 
 (use-package utop
   :init (setq utop-command "opam config exec -- utop -emacs"))
