@@ -26,13 +26,12 @@ With argument, do this that many times."
 (defun projectile-pyenv-mode-set ()
   "Set pyenv version matching project name."
   (let* ((project (projectile-project-name))
-         (pyenv-dir (concat (getenv "HOME") "/.pyenv/versions/"))
-         (venvs (directory-files pyenv-dir)))
-    (when (and (member project venvs)
+         (venv-dir (concat (getenv "HOME") "/src/" project "/.venv")))
+    (when (and (file-directory-p venv-dir)
                (not (equal project (pyenv-mode-version))))
       (message "switching pyenv %s" project)
       (pyenv-mode-set project)
-      (pyvenv-activate (concat pyenv-dir project)))))
+      (pyvenv-activate venv-dir))))
 
 (defun visit-term-buffer ()
   "Create or visit a terminal buffer."
