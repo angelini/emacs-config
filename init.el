@@ -27,7 +27,7 @@
 
 ;; Theme
 (load-theme 'zenburn t)
-(set-face-attribute 'default nil :height 160 :family "Source Code Pro")
+(set-face-attribute 'default nil :height 150 :family "Source Code Pro")
 
 (setq ring-bell-function 'ignore)
 (scroll-bar-mode -1)
@@ -168,7 +168,9 @@
   :hook (flycheck-mode . flycheck-rust-setup))
 
 (use-package flycheck-mypy
-  :config (flycheck-add-next-checker 'python-flake8 'python-mypy))
+  :config (progn
+            (setq flycheck-python-mypy-args '("--strict"))
+            (flycheck-add-next-checker 'python-flake8 'python-mypy)))
 
 (use-package go-mode
   :init (setq gofmt-command "goimports")
@@ -210,6 +212,10 @@
 
 (use-package utop
   :init (setq utop-command "opam config exec -- utop -emacs"))
+
+(use-package yaml-mode
+  :hook (yaml-mode . (lambda ()
+                       (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
 ;; C Mode
 (c-add-style "custom-c"
