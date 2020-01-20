@@ -208,7 +208,9 @@
           '(load-library "sql-indent")))
 
 (use-package typescript-mode
-  :init (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode)))
+  :init (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))
+  :hook (typescript-mode . (lambda ()
+                             (setq typescript-indent-level 2))))
 
 (use-package utop
   :init (setq utop-command "opam config exec -- utop -emacs"))
